@@ -1,0 +1,4 @@
+model-python/__pycache__/
+model-python/.idea/
+model-python/venv/
+.DS_Store
