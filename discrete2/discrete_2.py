@@ -40,7 +40,7 @@ class Vector:
         
         return out
 
-def main(m, n, l, mu1, sigma1, mu2, sigma2):
+def simulation(dt, num_steps, m, n, N, T1, T2):
     '''
     Parameters
     ----------
@@ -82,12 +82,12 @@ def main(m, n, l, mu1, sigma1, mu2, sigma2):
     
     for step in range(0, num_steps):
         # Correct units?
-        N = np.random.poisson(l * dt)
-        T1 = Vector(np.random.normal(dt * mu1, np.sqrt(dt) * sigma1, m))
-        T2 = Vector(np.random.normal(dt * mu2, np.sqrt(dt) * sigma2, n))
+        N_ = N(dt)
+        t1 = Vector(T1(dt))
+        t2 = Vector(T2(dt))
         
-        mask_wash = T1 <= tau_1
-        mask_style = T2 <= tau_2
+        mask_wash = t1 <= tau_1
+        mask_style = t2 <= tau_2
         
         # Serve styling chair people
         for i in range(0, n):
@@ -125,9 +125,9 @@ def main(m, n, l, mu1, sigma1, mu2, sigma2):
         
         # Process arrivals into washing chairs
         free_washing_chairs = wash.get_indices('F')
-        served = min(N, len(free_washing_chairs))
+        served = min(N_, len(free_washing_chairs))
         
-        N_blocked += N - served
+        N_blocked += N_ - served
         N_served += served 
         
         for i in range(0, served):
