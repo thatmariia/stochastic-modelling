@@ -31,4 +31,4 @@ def verify_model_1(dt, num_steps, m, n, c, w, s):
     
     print(f"Theoretical: {Pb}")
     
-verify_model_1(1, 1E9, 1, 1, 0.5, 0.4, 0.4)
+verify_model_1(1, 1000000, 1, 1, 0.5, 0.4, 0.4)

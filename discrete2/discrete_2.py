@@ -67,10 +67,7 @@ def simulation(dt, num_steps, m, n, N, T1, T2):
         number of blocked people.
 
     '''
-    
-    dt = 1/60 # timestep
-    num_steps = 1000 # number of steps
-    
+  
     tau_1 = Vector([0] * m)
     tau_2 = Vector([0] * n)
     
