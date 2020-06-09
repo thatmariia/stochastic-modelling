@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, IntEnum
 import numpy as np
 import csv
 
@@ -8,7 +8,7 @@ class Models(Enum):
     CONTINUOUS = 2
     TEST = 4
 
-class States(Enum):
+class States(IntEnum):
     FF = 0
     FO = 1
     OF = 2
