@@ -23,7 +23,7 @@ class Simulator:
 
         # Plotting visiting frequency
         self.plot_state_frequency(history=history)
-        self.customers_not_fitting(history=history)
+        self.customers_not_fitting(history=history, nr_steps=nr_steps)
 
 
     def plot_state_frequency(self, history):
@@ -36,7 +36,7 @@ class Simulator:
         ax.hist(history, bins=nr_states)
         fig.show()
 
-    def customers_not_fitting(self, history):
+    def customers_not_fitting(self, history, nr_steps):
         state_occurances = [None]*len(list(map(int, States)))
         for j in list(map(int, States)):
             state_occurances[j]=0
@@ -47,9 +47,12 @@ class Simulator:
         #a customer is not serviced if the system is in state 2,3 or 4
         nr_no_service = state_occurances[2]+state_occurances[3]+state_occurances[4]
 
-        print(self.transition_probabilities)
-        percent_no_service = nr_no_service*self.transition_probabilities[0] #FIX TRANSITION PROBABILITY HERE!!!!!!!!
-        # print(percent_no_service)
+        # print(self.transition_probabilities)
+        percent_no_service = nr_no_service/nr_steps*self.transition_probabilities[0][2] #FIX TRANSITION PROBABILITY HERE!!!!!!!!
+        print("\nThe percent of cutomers that will not fit is: ")
+        print(percent_no_service)
+        print("\n")
+
 
 
     # FF = 0 #Free Free
