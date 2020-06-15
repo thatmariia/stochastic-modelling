@@ -10,8 +10,8 @@ class Models(Enum):
 
 class States(IntEnum):
     FF = 0 #Free Free
-    FO = 1 #Free Occupied
-    OF = 2 #Occupied Free *if a new customer comes here he will not be surviced 
+    OF = 1 #Occupied Free *if a new customer comes here he will not be surviced 
+    FO = 2 #Free Occupied
     OO = 3 #Occupied Occupied *if a new customer comes here he will not be surviced 
     WO = 4 #Waiting Occupied *if a new customer comes here he will not be surviced 
 

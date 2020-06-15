@@ -20,3 +20,7 @@ simulator = Simulator(transition_probabilities=transition_probabilities)
 # running simulator
 simulator.simulate(init_state=States.FF, nr_steps=100)
 
+
+# Fix conditional probabilities
+# Generate plot with unconditional probability
+# generatate stationary distribution
