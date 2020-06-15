@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ModelsSetup import *
 
+
+
 class TransientSimulator:
 
     def __init__(self, t, l, params):
@@ -18,7 +20,7 @@ class TransientSimulator:
         self.params["l"] = l
         self.transition_probabilities = read_model("DISCRETE_1", self.params)
 
-    def simulate(self, init_state: States, nr_steps):
+    def simulate(self, init_state: States):
         history = [init_state]
         init_state_nr = init_state.value
 
@@ -36,7 +38,7 @@ class TransientSimulator:
 
         # Plotting visiting frequency
         self.plot_state_frequency(history=history)
-        self.customers_not_fitting(history=history, nr_steps=nr_steps)
+        self.customers_not_fitting(history=history, nr_steps=len(self.t))
 
 
     def plot_state_frequency(self, history):
@@ -45,6 +47,16 @@ class TransientSimulator:
         :param history: recorded sequence of visited states
         """
         nr_states = len(list(map(int, States)))
+        size=25
+        # size=15
+        plot_params = {'legend.fontsize': 'large',
+          'figure.figsize': (20,8),
+          'axes.labelsize': size,
+          'axes.titlesize': size,
+          'xtick.labelsize': size*0.75,
+          'ytick.labelsize': size*0.75,
+          'axes.titlepad': 25}
+        plt.rcParams.update(plot_params)
         fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
         # fig, ax = plt.subplots(figsize=(2))
         ax[0].plot(self.t, self.l)

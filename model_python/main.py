@@ -18,7 +18,7 @@ transition_probabilities = model.get_transition_probabilities(model.matrix)
 simulator = Simulator(transition_probabilities=transition_probabilities)
 
 # running simulator
-simulator.simulate(init_state=States.FF, nr_steps=100)
+simulator.simulate(init_state=States.FF, nr_steps=9000)
 
 
 # Fix conditional probabilities

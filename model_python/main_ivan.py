@@ -33,9 +33,11 @@ model = StochasticModel(params, type=Models.DISCRETE_1)
 simulator = TransientSimulator(t = t, l = l, params = params)
 
 # running simulator
-simulator.simulate(init_state=States.FF, nr_steps=100)
+simulator.simulate(init_state=States.FF)
 
-
+#static simulator
+simulator_static = Simulator(transition_probabilities=model.matrix)
+simulator_static.simulate(init_state=States.FF, nr_steps=9000)
 
 # generatate stationary distribution
 
