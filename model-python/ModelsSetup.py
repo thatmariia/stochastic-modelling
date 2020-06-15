@@ -9,11 +9,11 @@ class Models(Enum):
     TEST = 4
 
 class States(IntEnum):
-    FF = 0
-    FO = 1
-    OF = 2
-    OO = 3
-    WO = 4
+    FF = 0 #Free Free
+    FO = 1 #Free Occupied
+    OF = 2 #Occupied Free *if a new customer comes here he will not be surviced 
+    OO = 3 #Occupied Occupied *if a new customer comes here he will not be surviced 
+    WO = 4 #Waiting Occupied *if a new customer comes here he will not be surviced 
 
 
 def read_model(filename, d):
