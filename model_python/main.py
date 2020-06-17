@@ -5,7 +5,7 @@ from TransientSimulator import TransientSimulator
 from LambdaConstructor import LambdaConstructor
 
 params = {
-        "l" : 2, # lambda
+        "l" : 20, # lambda
         "s" : 8, # mu_s
         "w" : 3  # mu_w
 }

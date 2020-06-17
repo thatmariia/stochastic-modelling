@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from ModelsSetup import *
-
+import collections
+from statistics import mean
 
 
 class TransientSimulator:
@@ -64,7 +65,7 @@ class TransientSimulator:
 
             # quit if the simulation finishes by the time we transition
             if len(history) + rate > len(self.t):
-                history += [init_state] * (len(self.t) - len(history))
+                history += [States(next_step_nr)] * (len(self.t) - len(history))
                 break
 
             # waiting in the current state for 'rate' steps
@@ -91,7 +92,9 @@ class TransientSimulator:
         """
         nr_states = len(list(map(int, States)))
         size=25
-        # size=15
+
+        colors = ["#264653", "#e76f51", "#2a9d8f", "#e9c46a", "#f4a261"]
+
         plot_params = {
                       'legend.fontsize': 'large',
                       'figure.figsize': (20,8),
@@ -103,10 +106,26 @@ class TransientSimulator:
         }
         plt.rcParams.update(plot_params)
         fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
-        # fig, ax = plt.subplots(figsize=(2))
-        ax[0].plot(self.t, self.l)
-        #ax[0].set_xlim([9.9,10.1])
-        ax[1].hist(history, bins=nr_states)
+
+
+        ax[0].plot(np.linspace(10, 19, 13),
+                   np.full(13, fill_value=mean(self.l)),
+                   color=colors[2], linestyle=":", linewidth=7,
+                   label="mean")
+        ax[0].plot (self.t, self.l, color=colors[1], linewidth=10,
+                    label="values")
+        ax[0].legend(loc=2, fontsize=20)
+        ax[0].set_ylabel("lambda", size=40)
+        ax[0].set_xlabel ("hour of the day", size=40)
+        ax[0].set_xlim([10, 18.5])
+
+
+        frequencies = collections.Counter(history)
+        ax[1].bar(frequencies.keys(), frequencies.values(), width=0.3, color=colors)
+        plt.xticks(np.arange(len(frequencies)), frequencies.keys())
+        ax[1].set_ylabel("seconds spent", size=40)
+        ax[1].set_xlabel ("states", size=40)
+
         fig.show()
 
     def customers_not_fitting(self, history, nr_steps):
