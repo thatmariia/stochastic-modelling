@@ -12,10 +12,12 @@ class TransientSimulator:
         self.l = l
         self.params = params
 
-    def get_transition_matrix(self, t):
-        '''
-            calculates the transition matrix based on the time 
-        '''
+    def recalculate_transition_matrix(self, t):
+        """
+        calculates the transition matrix based on the time
+        :param t: current time
+        :return: 2d list transition probs
+        """
         l = self.l[self.t==t][0]
         self.params["l"] = l
         self.transition_probabilities = read_model("DISCRETE_1", self.params)
@@ -26,7 +28,7 @@ class TransientSimulator:
 
         # Going around the chain for nr_steps
         for i in self.t:
-            self.get_transition_matrix(t=i)
+            self.recalculate_transition_matrix(t=i)
             # print(self.transition_probabilities)
             next_step_nr = np.random.choice(a=list(map(int, States)),
                                             size=1,
@@ -82,9 +84,10 @@ class TransientSimulator:
         print(self.transition_probabilities)
 
 
-
-    #   FF = 0 #Free Free
-    # OF = 1 #Occupied Free *if a new customer comes here he will not be surviced 
-    # FO = 2 #Free Occupied
-    # OO = 3 #Occupied Occupied *if a new customer comes here he will not be surviced 
-    # WO = 4 #Waiting Occupied *if a new customer comes here he will not be surviced 
+    """
+        FF = 0 #Free Free
+        OF = 1 #Occupied Free *if a new customer comes here he will not be surviced 
+        FO = 2 #Free Occupied
+        OO = 3 #Occupied Occupied *if a new customer comes here he will not be surviced 
+        WO = 4 #Waiting Occupied *if a new customer comes here he will not be surviced 
+    """
