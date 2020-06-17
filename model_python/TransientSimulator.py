@@ -84,7 +84,6 @@ class TransientSimulator:
         self.plot_state_frequency(history=history)
         #self.customers_not_fitting(history=history, nr_steps=len(self.t))
 
-
     def plot_state_frequency(self, history):
         """
         plots the histogram of all visited states
@@ -107,7 +106,7 @@ class TransientSimulator:
         plt.rcParams.update(plot_params)
         fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
 
-
+        # lambda function
         ax[0].plot(np.linspace(10, 19, 13),
                    np.full(13, fill_value=mean(self.l)),
                    color=colors[2], linestyle=":", linewidth=7,
@@ -119,7 +118,7 @@ class TransientSimulator:
         ax[0].set_xlabel ("hour of the day", size=40)
         ax[0].set_xlim([10, 18.5])
 
-
+        # state visiting frequency
         frequencies = collections.Counter(history)
         ax[1].bar(frequencies.keys(), frequencies.values(), width=0.3, color=colors)
         plt.xticks(np.arange(len(frequencies)), frequencies.keys())
@@ -129,6 +128,7 @@ class TransientSimulator:
         fig.show()
 
     def customers_not_fitting(self, history, nr_steps):
+        # TODO:: make it work
         state_occurances = [None]*len(list(map(int, States)))
         for j in list(map(int, States)):
             state_occurances[j]=0

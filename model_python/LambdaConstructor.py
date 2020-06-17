@@ -16,8 +16,6 @@ class LambdaConstructor:
         else:
             self._generate_changing(nr_steps)
 
-    # TODO:: pass values
-
     def _generate_static(self, nr_steps):
         self.l = np.array ([0.6] * nr_steps)
 
