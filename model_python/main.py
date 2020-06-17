@@ -5,9 +5,9 @@ from TransientSimulator import TransientSimulator
 from LambdaConstructor import LambdaConstructor
 
 params = {
-        "l" : 0.5, # lambda
-        "s" : 0.3, # mu_s   
-        "w" : 0.2  # mu_w
+        "l" : 2, # lambda
+        "s" : 8, # mu_s
+        "w" : 3  # mu_w
 }
 nr_steps=30600 # working seconds
 is_static = False # whether lambda function is static
@@ -27,7 +27,7 @@ def static():
 
 
 def not_static():
-    constructor = LambdaConstructor (nr_steps=nr_steps, is_static=is_static)
+    constructor = LambdaConstructor (max_lambda=params["l"],nr_steps=nr_steps, is_static=is_static)
 
     # setting up the model
     model = StochasticModel (params, type=Models.CONTINUOUS)

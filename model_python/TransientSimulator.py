@@ -105,6 +105,7 @@ class TransientSimulator:
         fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
         # fig, ax = plt.subplots(figsize=(2))
         ax[0].plot(self.t, self.l)
+        #ax[0].set_xlim([9.9,10.1])
         ax[1].hist(history, bins=nr_states)
         fig.show()
 
