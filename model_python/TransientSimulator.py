@@ -51,13 +51,15 @@ class TransientSimulator:
         nr_states = len(list(map(int, States)))
         size=25
         # size=15
-        plot_params = {'legend.fontsize': 'large',
-          'figure.figsize': (20,8),
-          'axes.labelsize': size,
-          'axes.titlesize': size,
-          'xtick.labelsize': size*0.75,
-          'ytick.labelsize': size*0.75,
-          'axes.titlepad': 25}
+        plot_params = {
+                      'legend.fontsize': 'large',
+                      'figure.figsize': (20,8),
+                      'axes.labelsize': size,
+                      'axes.titlesize': size,
+                      'xtick.labelsize': size*0.75,
+                      'ytick.labelsize': size*0.75,
+                      'axes.titlepad': 25
+        }
         plt.rcParams.update(plot_params)
         fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
         # fig, ax = plt.subplots(figsize=(2))

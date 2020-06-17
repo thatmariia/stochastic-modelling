@@ -21,6 +21,11 @@ class LambdaConstructor:
         self.l = np.array ([0.6] * nr_steps)
 
     def _generate_changing(self, nr_steps):
+        """
+        Define lambda that is changing with time
+        Assumptioms:
+            * working hours from 10-18:30
+        """
         self.l = np.array ([0.0] * nr_steps)
 
         # probability starts at 0.1 and increases to 0.25
