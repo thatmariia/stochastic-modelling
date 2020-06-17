@@ -1,4 +1,5 @@
-model-python/__pycache__/
-model-python/.idea/
-model-python/venv/
+model_python/__pycache__/
+model_python/.idea/
+model_python/venv/
 .DS_Store
+.idea/
