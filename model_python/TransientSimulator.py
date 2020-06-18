@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 from ModelsSetup import *
 import collections
 from statistics import mean
@@ -82,7 +83,6 @@ class TransientSimulator:
 
         # Plotting visiting frequency
         self.plot_state_frequency(history=history)
-        #self.customers_not_fitting(history=history, nr_steps=len(self.t))
 
     def plot_state_frequency(self, history):
         """
@@ -96,17 +96,19 @@ class TransientSimulator:
 
         plot_params = {
                       'legend.fontsize': 'large',
-                      'figure.figsize': (20,8),
-                      'axes.labelsize': size,
-                      'axes.titlesize': size,
-                      'xtick.labelsize': size*0.75,
-                      'ytick.labelsize': size*0.75,
-                      'axes.titlepad': 25
+                      'figure.figsize' : (20,8),
+                      'axes.labelsize' : size,
+                      'axes.titlesize' : size,
+                      'xtick.labelsize': size*0.85,
+                      'ytick.labelsize': size*0.85,
+                      'axes.titlepad'  : 25
         }
         plt.rcParams.update(plot_params)
-        fig, ax = plt.subplots(2, figsize=(nr_states*4, 16))
+        fig, ax = plt.subplots(2, figsize=(nr_states*4, 20))
+
 
         # lambda function
+        ax[0].set_title("Change of lambda with time", fontsize=50)
         ax[0].plot(np.linspace(10, 19, 13),
                    np.full(13, fill_value=mean(self.l)),
                    color=colors[2], linestyle=":", linewidth=7,
@@ -118,33 +120,47 @@ class TransientSimulator:
         ax[0].set_xlabel ("hour of the day", size=40)
         ax[0].set_xlim([10, 18.5])
 
+        ax[0].text(
+                10.3, mean(self.l),
+                "{}".format(round(mean(self.l), 2)),
+                fontsize=40, color=colors[2],
+                ha="left", va="bottom"
+        )
+
         # state visiting frequency
         frequencies = collections.Counter(history)
+        ax[1].set_title("State visiting frequency", fontsize=50)
         ax[1].bar(frequencies.keys(), frequencies.values(), width=0.3, color=colors)
         plt.xticks(np.arange(len(frequencies)), frequencies.keys())
         ax[1].set_ylabel("seconds spent", size=40)
         ax[1].set_xlabel ("states", size=40)
 
+        not_fitting = round(self.customers_not_fitting(history),2)
+        ax[1].text(
+                len(frequencies)-1, max(frequencies.values()),
+                "no fit\n{}%".format(not_fitting),
+                fontsize=40, color=colors[2],
+                ha="center", va="top",
+                bbox=dict(facecolor=colors[3], alpha=0.5)
+        )
+
         fig.show()
 
-    def customers_not_fitting(self, history, nr_steps):
-        # TODO:: make it work
-        state_occurances = [None]*len(list(map(int, States)))
-        for j in list(map(int, States)):
-            state_occurances[j]=0
-            for i in history:
-                if i==j:
-                    state_occurances[j] = state_occurances[j]+1
-        #state_occurances defines the amount of times the system is in given state
-        #a customer is not serviced if the system is in state 2,3 or 4
-        nr_no_service = state_occurances[2]+state_occurances[3]+state_occurances[4]
+    def customers_not_fitting(self, history):
+        """
+        calculates the percentage of customers that didnt fit
+        :param history: recorded sequence of visited states
+        :return: percentage float [0.0, 100.0]
+        """
+        frequencies = collections.Counter (history)
+        if not States.OO in frequencies:
+            frequencies[States.OO] = 0
+        if not States.WO in frequencies:
+            frequencies[States.WO] = 0
 
-        # print(self.transition_probabilities)
-        percent_no_service = nr_no_service/nr_steps*self.transition_probabilities[0][2] 
-        print("\nThe percent of cutomers that will not fit is: ")
-        print(percent_no_service)
-        print("\n")
-        print(self.transition_probabilities)
+        sum_freqs = sum([freq for freq in frequencies.values()])
+        return 100.0 * (frequencies[States.OO] + frequencies[States.WO]) / sum_freqs
+
 
 
     """

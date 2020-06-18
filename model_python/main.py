@@ -4,9 +4,9 @@ from TransientSimulator import TransientSimulator
 from LambdaConstructor import LambdaConstructor
 
 params = {
-        "l" : 20, # lambda
-        "s" : 8, # mu_s
-        "w" : 3  # mu_w
+        "l" : 8, # lambda
+        "s" : 2,  # mu_s
+        "w" : 4   # mu_w
 }
 nr_steps=30600 # working seconds
 is_static = False # whether lambda function is static

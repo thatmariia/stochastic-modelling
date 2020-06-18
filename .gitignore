@@ -3,3 +3,4 @@ model_python/.idea/
 model_python/venv/
 .DS_Store
 .idea/
+model_python/__pycache__/
