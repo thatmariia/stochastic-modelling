@@ -15,6 +15,8 @@ class TransientSimulator:
         self.l = l
         self.params = params
 
+        self.not_fitting = 0.0
+
     def recalculate_matrix(self, t):
         """
         calculates the transition matrix based on the time
@@ -62,7 +64,7 @@ class TransientSimulator:
             # determining next state and associated rate
             rate, next_step_nr = self.get_next_step(curr_state_nr=init_state_nr)
 
-            print("sitting in state {} for {} seconds".format(init_state.name, rate))
+            #print("sitting in state {} for {} seconds".format(init_state.name, rate))
 
             # quit if the simulation finishes by the time we transition
             if len(history) + rate > len(self.t):
@@ -79,10 +81,11 @@ class TransientSimulator:
             init_state = States(next_step_nr)
             init_state_nr = next_step_nr
 
-        print(history)
+        #print(history)
 
         # Plotting visiting frequency
-        self.plot_state_frequency(history=history)
+        #self.plot_state_frequency(history=history)
+        self.not_fitting = self.customers_not_fitting(history=history)
 
     def plot_state_frequency(self, history):
         """
@@ -152,14 +155,17 @@ class TransientSimulator:
         :param history: recorded sequence of visited states
         :return: percentage float [0.0, 100.0]
         """
-        frequencies = collections.Counter (history)
+        frequencies = collections.Counter(history)
         if not States.OO in frequencies:
             frequencies[States.OO] = 0
         if not States.WO in frequencies:
             frequencies[States.WO] = 0
+        if not States.OF in frequencies:
+            frequencies[States.OF] = 0
 
-        sum_freqs = sum([freq for freq in frequencies.values()])
-        return 100.0 * (frequencies[States.OO] + frequencies[States.WO]) / sum_freqs
+        all_freqs = float(sum([freq for freq in frequencies.values()]))
+        occupied_freqs = float(frequencies[States.OO] + frequencies[States.WO] + frequencies[States.OF])
+        return 100.0 * (occupied_freqs / all_freqs)
 
 
 
