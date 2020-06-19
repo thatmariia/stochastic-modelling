@@ -4,7 +4,7 @@ from TransientSimulator import TransientSimulator
 from LambdaConstructor import LambdaConstructor
 from statistics import mean
 
-def main(l, s, w):
+def simulate(l, s, w, simulating=False):
     params = {
             "l": l,  # lambda
             "s": s,  # mu_s
@@ -20,37 +20,29 @@ def main(l, s, w):
 
     # setting up simulator
     simulator = TransientSimulator(matrix=model.matrix,
-                                   t=constructor.t, l=constructor.l, params=params)
+                                   t=constructor.t, l=constructor.l, params=params,
+                                   simulating=simulating)
     # running simulator
     simulator.simulate(init_state=States.FF)
-    return simulator.not_fitting
 
 
+def get_mean_nofit(epochs, l, s, w):
+    ps = [simulate(l, s, w) for _ in range(epochs)]
+    return mean(ps)
 
 
 if __name__ == '__main__':
-    best_l = 0.05
-    best_s = 0.05
-    best_w = 0.05
-    min_p = 100.0
-    for l in range(40, 100):
-        for s in range (5, 40):
-            for w in range(5, 40):
-                ps = []
-                for _ in range(10):
-                    p = main (l / 10, s / 10, w / 10)
-                    ps.append(p)
 
-                p = mean(ps)
-                print (p, l, s, w)
-                if p < min_p:
-                    min_p = p
-                    best_l = l
-                    best_s = s
-                    best_w = w
+    l = 9
+    s = 3
+    w = 6
+    epochs = 500
+    print("average percentage of non-fitting customers over {} epochs = {}".format(
+            epochs, get_mean_nofit(epochs, l, s, w))
+    )
+    simulate(l, s, w, simulating=True)
 
-    print("BEST")
-    print(best_l, best_s, best_w)
+
 
 
 

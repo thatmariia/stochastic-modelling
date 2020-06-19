@@ -8,7 +8,7 @@ from statistics import mean
 
 class TransientSimulator:
 
-    def __init__(self, matrix, t, l, params):
+    def __init__(self, matrix, t, l, params, simulating):
         self.generator_matrix = matrix
 
         self.t = t
@@ -16,6 +16,7 @@ class TransientSimulator:
         self.params = params
 
         self.not_fitting = 0.0
+        self.simulating = simulating
 
     def recalculate_matrix(self, t):
         """
@@ -84,7 +85,8 @@ class TransientSimulator:
         #print(history)
 
         # Plotting visiting frequency
-        #self.plot_state_frequency(history=history)
+        if self.simulating:
+            self.plot_state_frequency(history=history)
         self.not_fitting = self.customers_not_fitting(history=history)
 
     def plot_state_frequency(self, history):
