@@ -24,6 +24,7 @@ def simulate(l, s, w, simulating=False):
                                    simulating=simulating)
     # running simulator
     simulator.simulate(init_state=States.FF)
+    return simulator.not_fitting
 
 
 def get_mean_nofit(epochs, l, s, w):
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     s = 3
     w = 6
     epochs = 500
+
     print("average percentage of non-fitting customers over {} epochs = {}".format(
             epochs, get_mean_nofit(epochs, l, s, w))
     )
