@@ -4,14 +4,13 @@ from TransientSimulator import TransientSimulator
 from LambdaConstructor import LambdaConstructor
 from statistics import mean
 
-def simulate(l, s, w, simulating=False):
+def simulate(l, s, w, is_static=False, simulating=False):
     params = {
             "l": l,  # lambda
             "s": s,  # mu_s
             "w": w  # mu_w
     }
     nr_steps = 30600  # working seconds
-    is_static = False  # whether lambda function is static
 
     constructor = LambdaConstructor(max_lambda=params["l"], nr_steps=nr_steps, is_static=is_static)
 
@@ -27,22 +26,23 @@ def simulate(l, s, w, simulating=False):
     return simulator.not_fitting
 
 
-def get_mean_nofit(epochs, l, s, w):
-    ps = [simulate(l, s, w) for _ in range(epochs)]
+def get_mean_nofit(epochs, l, s, w, is_static):
+    ps = [simulate(l, s, w, is_static) for _ in range(epochs)]
     return mean(ps)
 
 
 if __name__ == '__main__':
 
-    l = 9
+    l = 3.64
     s = 3
     w = 6
-    epochs = 500
+    epochs = 254
+    is_static = True
 
     print("average percentage of non-fitting customers over {} epochs = {}".format(
-            epochs, get_mean_nofit(epochs, l, s, w))
+            epochs, get_mean_nofit(epochs, l, s, w, is_static))
     )
-    simulate(l, s, w, simulating=True)
+    simulate(l, s, w, is_static, simulating=True)
 
 
 

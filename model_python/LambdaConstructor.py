@@ -17,7 +17,7 @@ class LambdaConstructor:
             self._generate_changing(nr_steps)
 
     def _generate_static(self, nr_steps):
-        self.l = np.array ([0.6] * nr_steps)
+        self.l = np.array ([self.max_lambda] * nr_steps)
 
     def _generate_changing(self, nr_steps):
         """
